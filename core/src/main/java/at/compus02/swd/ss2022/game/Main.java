@@ -1,5 +1,8 @@
 package at.compus02.swd.ss2022.game;
 
+import at.compus02.swd.ss2022.game.TileFactory.TileFactory;
+import at.compus02.swd.ss2022.game.TileFactory.Tiles;
+import at.compus02.swd.ss2022.game.gameobjects.Bush;
 import at.compus02.swd.ss2022.game.gameobjects.GameObject;
 import at.compus02.swd.ss2022.game.gameobjects.Sign;
 import at.compus02.swd.ss2022.game.input.GameInput;
@@ -28,10 +31,27 @@ public class Main extends ApplicationAdapter {
 	private float deltaAccumulator = 0;
 	private BitmapFont font;
 
+
 	@Override
 	public void create() {
+		Bush bush = new Bush();
+		bush.setPosition(30, 40);
+
+		Sign sign = new Sign();
+
+		TileFactory gras = new TileFactory("gras");
+		gras.setPosition(-10,10);
+
+		TileFactory water = new TileFactory("water");
+		gras.setPosition(-40,10);
+
 		batch = new SpriteBatch();
-		gameObjects.add(new Sign());
+
+		gameObjects.add(sign);
+		gameObjects.add(bush);
+		gameObjects.add(gras);
+		gameObjects.add(water);
+
 		font = new BitmapFont();
 		font.setColor(Color.WHITE);
 		Gdx.input.setInputProcessor(this.gameInput);
