@@ -3,7 +3,7 @@ package at.compus02.swd.ss2022.game.TileFactory;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 
-public class Tiles {
+public class Tile {
 
     private Texture texture;
     private Sprite sprite;

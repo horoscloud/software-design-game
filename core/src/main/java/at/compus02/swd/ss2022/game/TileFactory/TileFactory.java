@@ -7,10 +7,10 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 public class TileFactory implements GameObject {
 
     Sprite sprite;
-    Tiles tile;
+    Tile tile;
 
     public TileFactory(String tileName) {
-        tile = new Tiles();
+        tile = new Tile();
 
        switch (tileName){
            case "gras": sprite = tile.gras(); break;
