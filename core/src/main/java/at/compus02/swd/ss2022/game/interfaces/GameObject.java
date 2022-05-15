@@ -1,4 +1,4 @@
-package at.compus02.swd.ss2022.game.gameobjects;
+package at.compus02.swd.ss2022.game.interfaces;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 

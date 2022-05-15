@@ -1,18 +1,14 @@
 package at.compus02.swd.ss2022.game;
 
-import at.compus02.swd.ss2022.game.TileFactory.TileFactory;
-import at.compus02.swd.ss2022.game.TileFactory.Tiles;
-import at.compus02.swd.ss2022.game.gameobjects.Bush;
-import at.compus02.swd.ss2022.game.gameobjects.GameObject;
-import at.compus02.swd.ss2022.game.gameobjects.Sign;
+import at.compus02.swd.ss2022.game.factorys.TileFactory;
+import at.compus02.swd.ss2022.game.interfaces.GameObject;
 import at.compus02.swd.ss2022.game.input.GameInput;
+import at.compus02.swd.ss2022.game.world.World;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
@@ -21,7 +17,7 @@ import com.badlogic.gdx.utils.viewport.ExtendViewport;
 public class Main extends ApplicationAdapter {
 	private SpriteBatch batch;
 
-	private ExtendViewport viewport = new ExtendViewport(480.0f, 480.0f, 480.0f, 480.0f);
+	private ExtendViewport viewport = new ExtendViewport(1200.0f, 800.0f, 1200.0f, 800.0f);
 	private GameInput gameInput = new GameInput();
 
 	private Array<GameObject> gameObjects = new Array<>();
@@ -34,23 +30,27 @@ public class Main extends ApplicationAdapter {
 
 	@Override
 	public void create() {
-		Bush bush = new Bush();
-		bush.setPosition(30, 40);
-
-		Sign sign = new Sign();
-
-		TileFactory gras = new TileFactory("gras");
-		gras.setPosition(-10,10);
-
-		TileFactory water = new TileFactory("water");
-		gras.setPosition(-40,10);
 
 		batch = new SpriteBatch();
 
-		gameObjects.add(sign);
-		gameObjects.add(bush);
-		gameObjects.add(gras);
-		gameObjects.add(water);
+		///////////////////////////////////////////
+
+		//Create World and add worldObjects to gameObjects
+
+		World level = new World();
+		level.create();
+		//level.generateEnv(100);
+
+		for (int i = 0; i < level.getWorldObjects().size; i++) {
+			gameObjects.add(level.getWorldObjects().get(i));
+		}
+
+
+
+
+		//gameObjects.add(tile);
+
+		//////////////////////////////////////////////
 
 		font = new BitmapFont();
 		font.setColor(Color.WHITE);
@@ -69,13 +69,13 @@ public class Main extends ApplicationAdapter {
 		for(GameObject gameObject : gameObjects) {
 			gameObject.draw(batch);
 		}
-		font.draw(batch, "Hello Game", -220, -220);
+		font.draw(batch, "Game Assets loaded: " + gameObjects.size, -220, -220);
 		batch.end();
 	}
 
 	@Override
 	public void render() {
-		Gdx.gl.glClearColor(0.15f, 0.15f, 0.2f, 1f);
+		Gdx.gl.glClearColor(0, 0, 0, 1f);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
 		float delta = Gdx.graphics.getDeltaTime();
