@@ -27,7 +27,6 @@ public class Main extends ApplicationAdapter {
 	private float deltaAccumulator = 0;
 	private BitmapFont font;
 
-
 	@Override
 	public void create() {
 
@@ -39,16 +38,10 @@ public class Main extends ApplicationAdapter {
 
 		World level = new World();
 		level.create();
-		//level.generateEnv(100);
 
 		for (int i = 0; i < level.getWorldObjects().size; i++) {
 			gameObjects.add(level.getWorldObjects().get(i));
 		}
-
-
-
-
-		//gameObjects.add(tile);
 
 		//////////////////////////////////////////////
 

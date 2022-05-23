@@ -1,28 +1,27 @@
 package at.compus02.swd.ss2022.game.factorys;
 
+import at.compus02.swd.ss2022.game.gameobjects.Object;
 import at.compus02.swd.ss2022.game.interfaces.GameObject;
-import at.compus02.swd.ss2022.game.gameobjects.Tile;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
-public class TileFactory implements GameObject {
-
+public class ObjectFactory implements GameObject {
     Sprite sprite;
-    Tile tile;
+    Object object;
 
-    public TileFactory() {
-        tile = new Tile();
+
+    public ObjectFactory() {
+        object = new Object();
     }
 
     public void create(String tileName){
         switch (tileName){
-            case "gras": sprite = tile.create("gras"); break;
-            case "gravel": sprite = tile.create("gravel"); break;
-            case "wall": sprite = tile.create("wall"); break;
-            case "water": sprite = tile.create("water"); break;
+            case "bush": sprite = object.create("bush"); break;
+            case "sign": sprite = object.create("sign"); break;
+            case "log": sprite = object.create("log"); break;
+            case "stone": sprite = object.create("stone"); break;
         }
     }
-
 
 
     @Override
@@ -44,4 +43,5 @@ public class TileFactory implements GameObject {
     public void draw(SpriteBatch batch) {
         sprite.draw(batch);
     }
+
 }
