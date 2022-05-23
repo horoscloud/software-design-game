@@ -1,6 +1,8 @@
 package at.compus02.swd.ss2022.game;
 
+import at.compus02.swd.ss2022.game.factorys.PlayerFactory;
 import at.compus02.swd.ss2022.game.factorys.TileFactory;
+import at.compus02.swd.ss2022.game.gameobjects.Player;
 import at.compus02.swd.ss2022.game.interfaces.GameObject;
 import at.compus02.swd.ss2022.game.input.GameInput;
 import at.compus02.swd.ss2022.game.world.World;
@@ -27,6 +29,11 @@ public class Main extends ApplicationAdapter {
 	private float deltaAccumulator = 0;
 	private BitmapFont font;
 
+	PlayerFactory player;
+
+	float stateTime = 0f;
+
+
 	@Override
 	public void create() {
 
@@ -42,6 +49,9 @@ public class Main extends ApplicationAdapter {
 		for (int i = 0; i < level.getWorldObjects().size; i++) {
 			gameObjects.add(level.getWorldObjects().get(i));
 		}
+
+		player = new PlayerFactory();
+
 
 		//////////////////////////////////////////////
 
@@ -62,7 +72,16 @@ public class Main extends ApplicationAdapter {
 		for(GameObject gameObject : gameObjects) {
 			gameObject.draw(batch);
 		}
-		font.draw(batch, "Game Assets loaded: " + gameObjects.size, -220, -220);
+
+		player.draw(batch);
+		player.act(2);
+
+
+
+
+		stateTime += Gdx.graphics.getDeltaTime();
+
+		font.draw(batch, "Tiles on screen: " + gameObjects.size, -viewport.getMaxWorldWidth()/3, -viewport.getMaxWorldHeight()/3);
 		batch.end();
 	}
 
