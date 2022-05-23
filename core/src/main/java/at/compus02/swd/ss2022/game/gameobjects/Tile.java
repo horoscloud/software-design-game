@@ -26,6 +26,22 @@ public class Tile {
                 texture = new Texture("tile_water.png");
                 sprite = new Sprite(this.texture);
                 return sprite;
+            case "bush":
+                texture = new Texture("bush.png");
+                sprite = new Sprite(this.texture);
+                return sprite;
+            case "sign":
+                texture = new Texture("sign.png");
+                sprite = new Sprite(this.texture);
+                return sprite;
+            case "log":
+                texture = new Texture("log.png");
+                sprite = new Sprite(this.texture);
+                return sprite;
+            case "stone":
+                texture = new Texture("stone.png");
+                sprite = new Sprite(this.texture);
+                return sprite;
         }
         return null;
     }

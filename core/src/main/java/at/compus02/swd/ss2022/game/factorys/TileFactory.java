@@ -20,9 +20,12 @@ public class TileFactory implements GameObject {
             case "gravel": sprite = tile.create("gravel"); break;
             case "wall": sprite = tile.create("wall"); break;
             case "water": sprite = tile.create("water"); break;
+            case "bush": sprite = tile.create("bush"); break;
+            case "sign": sprite = tile.create("sign"); break;
+            case "log": sprite = tile.create("log"); break;
+            case "stone": sprite = tile.create("stone"); break;
         }
     }
-
 
 
     @Override
