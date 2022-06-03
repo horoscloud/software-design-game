@@ -1,5 +1,6 @@
 package at.compus02.swd.ss2022.game;
 
+import at.compus02.swd.ss2022.game.factorys.AnimationFactory;
 import at.compus02.swd.ss2022.game.factorys.PlayerFactory;
 import at.compus02.swd.ss2022.game.factorys.TileFactory;
 import at.compus02.swd.ss2022.game.gameobjects.Player;
@@ -30,6 +31,7 @@ public class Main extends ApplicationAdapter {
 	private BitmapFont font;
 
 	PlayerFactory player;
+	AnimationFactory animationFactory;
 
 	float stateTime = 0f;
 
@@ -39,6 +41,8 @@ public class Main extends ApplicationAdapter {
 
 		batch = new SpriteBatch();
 
+
+
 		///////////////////////////////////////////
 
 		//Create World and add worldObjects to gameObjects
@@ -47,10 +51,13 @@ public class Main extends ApplicationAdapter {
 		level.create();
 
 		for (int i = 0; i < level.getWorldObjects().size; i++) {
-			gameObjects.add(level.getWorldObjects().get(i));
+			tileFactories.add(level.getWorldObjects().get(i));
+
+			//^^Diese funktioniert noch nicht^^
 		}
 
 		player = new PlayerFactory();
+		animationFactory = new AnimationFactory();
 
 
 		//////////////////////////////////////////////
@@ -71,10 +78,12 @@ public class Main extends ApplicationAdapter {
 		batch.begin();
 		for(GameObject gameObject : gameObjects) {
 			gameObject.draw(batch);
+
 		}
 
-		player.draw(batch);
-		player.act(2);
+		player.create().draw(batch);
+		animationFactory.create("run");
+
 
 
 

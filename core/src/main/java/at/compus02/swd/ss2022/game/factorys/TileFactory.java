@@ -1,50 +1,27 @@
 package at.compus02.swd.ss2022.game.factorys;
 
-import at.compus02.swd.ss2022.game.interfaces.GameObject;
 import at.compus02.swd.ss2022.game.gameobjects.Tile;
-import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
-public class TileFactory implements GameObject {
+public class TileFactory {
 
-    Sprite sprite;
-    Tile tile;
+   Tile tile;
 
     public TileFactory() {
-        tile = new Tile();
+
     }
 
-    public void create(String tileName){
+    public Tile create(String tileName){
         switch (tileName){
-            case "gras": sprite = tile.create("gras"); break;
-            case "gravel": sprite = tile.create("gravel"); break;
-            case "wall": sprite = tile.create("wall"); break;
-            case "water": sprite = tile.create("water"); break;
-            case "bush": sprite = tile.create("bush"); break;
-            case "sign": sprite = tile.create("sign"); break;
-            case "log": sprite = tile.create("log"); break;
-            case "stone": sprite = tile.create("stone"); break;
+            case "gras": return tile = new Tile("gras");
+            case "gravel": return tile = new Tile("gravel");
+            case "wall": return tile = new Tile("wall");
+            case "water": return tile = new Tile("water");
+            case "bush": return tile = new Tile("bush");
+            case "sign": return tile = new Tile("sign");
+            case "log": return tile = new Tile("log");
+            case "stone": tile = new Tile("stone");
         }
+        return null;
     }
 
-
-    @Override
-    public void act(float delta) {
-
-    }
-
-    @Override
-    public void setPosition(float x, float y) {
-        sprite.setPosition(x,y);
-    }
-
-    @Override
-    public void setRotation(float deg){
-        sprite.setRotation(deg);
-    }
-
-    @Override
-    public void draw(SpriteBatch batch) {
-        sprite.draw(batch);
-    }
 }

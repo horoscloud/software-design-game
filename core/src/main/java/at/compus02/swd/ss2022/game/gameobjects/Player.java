@@ -9,19 +9,29 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 
-public class Player {
+public class Player implements GameObject{
 
     private Texture texture;
     private Sprite sprite;
 
 
     public Player() {
-
-    }
-
-    public Sprite create(){
         texture = new Texture("player/player_idle.png");
         sprite = new Sprite(this.texture);
-        return sprite;
     }
+
+    @Override
+    public void act(float temp) {
+
+
+    }
+
+    @Override
+    public void setPosition(float x, float y) {sprite.setPosition(x,y);}
+
+    @Override
+    public void setRotation(float deg) {sprite.rotate(deg);}
+
+    @Override
+    public void draw(SpriteBatch batch) {sprite.draw(batch);}
 }

@@ -1,48 +1,70 @@
 package at.compus02.swd.ss2022.game.gameobjects;
 
+import at.compus02.swd.ss2022.game.interfaces.GameObject;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
-public class Tile {
+public class Tile implements GameObject {
 
     private Texture texture;
     private Sprite sprite;
 
-    public Sprite create(String tileName){
+    public Tile(String tileName) {
         switch (tileName){
             case "gras":
                 texture = new Texture("tile_gras.png");
                 sprite = new Sprite(this.texture);
-                return sprite;
+                break;
             case "gravel":
                 texture = new Texture("tile_gravel.png");
                 sprite = new Sprite(this.texture);
-                return sprite;
+                break;
             case "wall":
                 texture = new Texture("tile_wall.png");
                 sprite = new Sprite(this.texture);
-                return sprite;
+                break;
             case "water":
                 texture = new Texture("tile_water.png");
                 sprite = new Sprite(this.texture);
-                return sprite;
+                break;
             case "bush":
                 texture = new Texture("bush.png");
                 sprite = new Sprite(this.texture);
-                return sprite;
+                break;
             case "sign":
                 texture = new Texture("sign.png");
                 sprite = new Sprite(this.texture);
-                return sprite;
+                break;
             case "log":
                 texture = new Texture("log.png");
                 sprite = new Sprite(this.texture);
-                return sprite;
+                break;
             case "stone":
                 texture = new Texture("stone.png");
                 sprite = new Sprite(this.texture);
-                return sprite;
+                break;
         }
-        return null;
+    }
+
+
+    @Override
+    public void act(float delta) {
+
+    }
+
+    @Override
+    public void setPosition(float x, float y) {
+        this.sprite.setPosition(x, y);
+    }
+
+    @Override
+    public void setRotation(float deg) {
+        this.setRotation(deg);
+    }
+
+    @Override
+    public void draw(SpriteBatch batch) {
+        sprite.draw(batch);
     }
 }
