@@ -1,6 +1,7 @@
 package at.compus02.swd.ss2022.game.factorys;
 
 import at.compus02.swd.ss2022.game.gameobjects.Tile;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class TileFactory {
 
@@ -19,7 +20,7 @@ public class TileFactory {
             case "bush": return tile = new Tile("bush");
             case "sign": return tile = new Tile("sign");
             case "log": return tile = new Tile("log");
-            case "stone": tile = new Tile("stone");
+            case "stone": return tile = new Tile("stone");
         }
         return null;
     }

@@ -11,9 +11,11 @@ public class PlayerFactory{
     Player player;
 
     public PlayerFactory() {
+        player = new Player();
     }
 
     public Player create(){
-        return new Player();
+        return player;
     }
+
 }

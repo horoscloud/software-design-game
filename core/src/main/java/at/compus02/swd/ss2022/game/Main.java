@@ -12,6 +12,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
@@ -31,7 +32,6 @@ public class Main extends ApplicationAdapter {
 	private BitmapFont font;
 
 	PlayerFactory player;
-	AnimationFactory animationFactory;
 
 	float stateTime = 0f;
 
@@ -47,17 +47,16 @@ public class Main extends ApplicationAdapter {
 
 		//Create World and add worldObjects to gameObjects
 
+
 		World level = new World();
 		level.create();
 
-		for (int i = 0; i < level.getWorldObjects().size; i++) {
-			tileFactories.add(level.getWorldObjects().get(i));
-
-			//^^Diese funktioniert noch nicht^^
+		for (GameObject gm:level.getWorldObjects()) {
+			gameObjects.add(gm);
 		}
 
+
 		player = new PlayerFactory();
-		animationFactory = new AnimationFactory();
 
 
 		//////////////////////////////////////////////
@@ -75,16 +74,15 @@ public class Main extends ApplicationAdapter {
 
 	private void draw() {
 		batch.setProjectionMatrix(viewport.getCamera().combined);
+
 		batch.begin();
 		for(GameObject gameObject : gameObjects) {
 			gameObject.draw(batch);
-
 		}
 
+
+		gameInput.input(player.create().getSprite(), 3);
 		player.create().draw(batch);
-		animationFactory.create("run");
-
-
 
 
 

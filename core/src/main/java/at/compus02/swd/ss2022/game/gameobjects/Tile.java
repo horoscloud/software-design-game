@@ -47,6 +47,9 @@ public class Tile implements GameObject {
         }
     }
 
+    public Sprite getSprite() {
+        return sprite;
+    }
 
     @Override
     public void act(float delta) {
@@ -54,17 +57,19 @@ public class Tile implements GameObject {
     }
 
     @Override
-    public void setPosition(float x, float y) {
+    public GameObject setPosition(float x, float y) {
         this.sprite.setPosition(x, y);
+        return this;
     }
 
     @Override
-    public void setRotation(float deg) {
+    public GameObject setRotation(float deg) {
         this.setRotation(deg);
+        return this;
     }
 
     @Override
     public void draw(SpriteBatch batch) {
-        sprite.draw(batch);
+        this.sprite.draw(batch);
     }
 }
