@@ -1,10 +1,8 @@
 package at.compus02.swd.ss2022.game.world;
 
-import at.compus02.swd.ss2022.game.gameobjects.Tile;
 import at.compus02.swd.ss2022.game.interfaces.GameObject;
 import at.compus02.swd.ss2022.game.factorys.TileFactory;
-import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.utils.Array;
 
 public class World {
@@ -13,14 +11,15 @@ public class World {
 
     public World() {
         this.worldObjects = new Array<>();
+
     }
 
     public void create() {
 
-        for (int i = -600; i < 600; i = i + 32) {
+        for (int i = -Gdx.graphics.getWidth()/3; i < Gdx.graphics.getWidth()/3; i = i + 32) {
             worldObjects.add(new TileFactory().create("gras").setPosition(i,0));
 
-            for (int p = -600; p < 600; p = p + 32) {
+            for (int p = -Gdx.graphics.getWidth()/2; p < Gdx.graphics.getWidth()/2; p = p + 32) {
                 worldObjects.add(new TileFactory().create("gras").setPosition(p,i));
             }
         }
