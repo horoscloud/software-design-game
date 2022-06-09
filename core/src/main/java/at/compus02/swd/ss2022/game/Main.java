@@ -6,6 +6,8 @@ import at.compus02.swd.ss2022.game.factorys.TileFactory;
 import at.compus02.swd.ss2022.game.gameobjects.Player;
 import at.compus02.swd.ss2022.game.interfaces.GameObject;
 import at.compus02.swd.ss2022.game.input.GameInput;
+import at.compus02.swd.ss2022.game.observer.PlayerObserver;
+import at.compus02.swd.ss2022.game.repositories.AssetRepository;
 import at.compus02.swd.ss2022.game.world.World;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
@@ -31,7 +33,11 @@ public class Main extends ApplicationAdapter {
 	private float deltaAccumulator = 0;
 	private BitmapFont font;
 
-	PlayerFactory player;
+	private PlayerFactory player;
+
+	private AssetRepository assetRepository;
+
+	PlayerObserver playerObserver;
 
 	float stateTime = 0f;
 
@@ -41,12 +47,13 @@ public class Main extends ApplicationAdapter {
 
 		batch = new SpriteBatch();
 
+		assetRepository = new AssetRepository();
+		assetRepository.preLoadAssets();
 
+		playerObserver = new PlayerObserver();
 
 		///////////////////////////////////////////
-
 		//Create World and add worldObjects to gameObjects
-
 
 		World level = new World();
 		level.create();
@@ -82,13 +89,19 @@ public class Main extends ApplicationAdapter {
 
 
 		gameInput.input(player.create().getSprite(), 3);
-		player.create().draw(batch);
 
+		player.create().draw(batch);
 
 
 		stateTime += Gdx.graphics.getDeltaTime();
 
+
+		playerObserver.getPosition(font, player.create().getSprite(), batch, -300, 50);
+
+		playerObserver.getRotation(font, player.create().getSprite(), batch, -500, 50);
+
 		font.draw(batch, "Tiles on screen: " + gameObjects.size, -viewport.getMaxWorldWidth()/3, -viewport.getMaxWorldHeight()/3);
+
 		batch.end();
 	}
 

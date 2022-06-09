@@ -8,9 +8,6 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 
 public class GameInput extends InputAdapter {
 
-    private float xDir;
-    private float yDir;
-
     public GameInput() {
 
     }
@@ -19,30 +16,22 @@ public class GameInput extends InputAdapter {
 
         if (Gdx.input.isKeyPressed(Input.Keys.LEFT) || Gdx.input.isKeyPressed(Input.Keys.A)) {
             sprite.translateX(-1f * playerSpeed);
-            xDir = -1;
         }
 
         if (Gdx.input.isKeyPressed(Input.Keys.RIGHT) || Gdx.input.isKeyPressed(Input.Keys.D)) {
             sprite.translateX(1f * playerSpeed);
-            xDir = 1;
+
         }
 
         if (Gdx.input.isKeyPressed(Input.Keys.UP) || Gdx.input.isKeyPressed(Input.Keys.W)) {
-            sprite.translateY(1f*playerSpeed);
-            yDir = 1;
+            sprite.translateY(1f * playerSpeed);
+
         }
 
         if (Gdx.input.isKeyPressed(Input.Keys.DOWN) || Gdx.input.isKeyPressed(Input.Keys.S)) {
-            sprite.translateY(-1f*playerSpeed);
-            yDir = -1;
+            sprite.translateY(-1f * playerSpeed);
+
         }
     }
 
-    public float getxDir() {
-        return xDir;
-    }
-
-    public float getyDir() {
-        return yDir;
-    }
 }
