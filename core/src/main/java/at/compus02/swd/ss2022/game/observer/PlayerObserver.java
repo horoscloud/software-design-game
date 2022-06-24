@@ -6,39 +6,35 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
-public class PlayerObserver implements GameObserver<Sprite> {
+public class PlayerObserver implements GameObserver {
 
     private float rotX = 0;
     private float rotY = 0;
 
     public PlayerObserver() {}
 
-    public void getPosition(Sprite sprite){
-        System.out.println(sprite.getX());
-        System.out.println(sprite.getY());
+    public void outputPosition(float x,float y){
+        System.out.println(x);
+        System.out.println(y);
     }
 
-    public void getPosition(BitmapFont font, Sprite sprite, SpriteBatch batch, float fontPosX, float fontPosY){
-        font.draw(batch, "PlayerPosX: " + sprite.getX(), fontPosX, fontPosY);
-        font.draw(batch, "PlayerPosY: " + sprite.getY(), fontPosX, fontPosY-15);
-    }
 
-    public void getRotation(Sprite sprite){
-       if(sprite.getX() < rotX){
+    public void outputRotation(float x, float y){
+       if(x < rotX){
            System.out.println("PLayer is facing LEFT");
-           rotX = sprite.getX();
+           rotX = x;
        }
-       if(sprite.getX() > rotX){
+       if(x > rotX){
             System.out.println("PLayer is facing RIGHT");
-            rotX = sprite.getX();
+            rotX = x;
        }
-        if(sprite.getY() < rotY){
+        if(y < rotY){
             System.out.println("PLayer is facing DOWN");
-            rotY = sprite.getY();
+            rotY = y;
         }
-        if(sprite.getY() > rotY){
+        if(y > rotY){
             System.out.println("PLayer is facing UP");
-            rotY = sprite.getY();
+            rotY = y;
         }
     }
 

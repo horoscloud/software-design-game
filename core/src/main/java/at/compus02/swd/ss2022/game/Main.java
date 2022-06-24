@@ -16,6 +16,7 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 
@@ -41,11 +42,11 @@ public class Main extends ApplicationAdapter {
 
 	float stateTime = 0f;
 
-
 	@Override
 	public void create() {
 
 		batch = new SpriteBatch();
+
 
 		assetRepository = new AssetRepository();
 		assetRepository.preLoadAssets();
@@ -93,12 +94,13 @@ public class Main extends ApplicationAdapter {
 		player.create().draw(batch);
 
 
+
 		stateTime += Gdx.graphics.getDeltaTime();
 
 
-		playerObserver.getPosition(font, player.create().getSprite(), batch, -300, 50);
 
-		playerObserver.getRotation(font, player.create().getSprite(), batch, -500, 50);
+		playerObserver.outputPosition(player.create().getX(), player.create().getY());
+		playerObserver.outputRotation(player.create().getX(), player.create().getY());
 
 		font.draw(batch, "Tiles on screen: " + gameObjects.size, -viewport.getMaxWorldWidth()/3, -viewport.getMaxWorldHeight()/3);
 
