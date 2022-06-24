@@ -1,6 +1,7 @@
 package at.compus02.swd.ss2022.game;
 
 import at.compus02.swd.ss2022.game.factorys.AnimationFactory;
+import at.compus02.swd.ss2022.game.factorys.EnemyFactory;
 import at.compus02.swd.ss2022.game.factorys.PlayerFactory;
 import at.compus02.swd.ss2022.game.factorys.TileFactory;
 import at.compus02.swd.ss2022.game.gameobjects.Player;
@@ -35,6 +36,7 @@ public class Main extends ApplicationAdapter {
 	private BitmapFont font;
 
 	private PlayerFactory player;
+	private EnemyFactory enemy;
 
 	private AssetRepository assetRepository;
 
@@ -66,6 +68,8 @@ public class Main extends ApplicationAdapter {
 
 		player = new PlayerFactory();
 
+		enemy = new EnemyFactory();
+
 
 		//////////////////////////////////////////////
 
@@ -93,6 +97,9 @@ public class Main extends ApplicationAdapter {
 
 		player.create().draw(batch);
 
+
+		enemy.create("zombie", 34,23).draw(batch);
+		enemy.create("fireball", 100,23).draw(batch);
 
 
 		stateTime += Gdx.graphics.getDeltaTime();

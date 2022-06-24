@@ -15,12 +15,9 @@ public class Player implements GameObject{
         sprite = new Sprite(this.texture);
     }
 
-    public Sprite getSprite() {
-        return sprite;
-    }
-
     public float getX(){return sprite.getX();}
     public float getY(){return sprite.getY();}
+    public Sprite getSprite(){return sprite;}
 
     @Override
     public void act(float temp) {}
