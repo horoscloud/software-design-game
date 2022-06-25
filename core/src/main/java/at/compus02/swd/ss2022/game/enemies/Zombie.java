@@ -1,32 +1,40 @@
-package at.compus02.swd.ss2022.game.gameobjects;
+package at.compus02.swd.ss2022.game.enemies;
 
 import at.compus02.swd.ss2022.game.interfaces.GameObject;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
-public class Enemy implements GameObject {
+public class Zombie implements GameObject {
 
     private Texture texture;
     private Sprite sprite;
 
-    public Enemy(String enemyName) {
-        switch (enemyName){
-            case "zombie":
-                texture = new Texture("enemy/zombie.png");
-                sprite = new Sprite(this.texture);
-                sprite.setSize(32,32);
-                break;
-            case "fireball":
-                texture = new Texture("enemy/fireball.png");
-                sprite = new Sprite(this.texture);
-                sprite.setSize(32,32);
-                break;
-        }
+    public Zombie() {
+        texture = new Texture("enemy/zombie.png");
+        sprite = new Sprite(this.texture);
+        sprite.setSize(32,32);
+        sprite.setCenter(16,48);
+
     }
 
     public float getX(){return sprite.getX();}
     public float getY(){return sprite.getY();}
+
+    @Override
+    public float getWidth() {
+        return sprite.getWidth();
+    }
+
+    @Override
+    public float getHeight() {
+        return sprite.getHeight();
+    }
+
+    @Override
+    public Sprite getSprite() {
+        return this.sprite;
+    }
 
 
     @Override

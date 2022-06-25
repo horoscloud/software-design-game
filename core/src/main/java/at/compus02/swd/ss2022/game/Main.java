@@ -1,13 +1,12 @@
 package at.compus02.swd.ss2022.game;
 
-import at.compus02.swd.ss2022.game.factorys.AnimationFactory;
+import at.compus02.swd.ss2022.game.collision.Collision;
+import at.compus02.swd.ss2022.game.enemies.Zombie;
 import at.compus02.swd.ss2022.game.factorys.EnemyFactory;
 import at.compus02.swd.ss2022.game.factorys.PlayerFactory;
-import at.compus02.swd.ss2022.game.factorys.TileFactory;
-import at.compus02.swd.ss2022.game.gameobjects.Player;
 import at.compus02.swd.ss2022.game.interfaces.GameObject;
 import at.compus02.swd.ss2022.game.input.GameInput;
-import at.compus02.swd.ss2022.game.observer.PlayerObserver;
+import at.compus02.swd.ss2022.game.observer.PositionObserver;
 import at.compus02.swd.ss2022.game.repositories.AssetRepository;
 import at.compus02.swd.ss2022.game.world.World;
 import com.badlogic.gdx.ApplicationAdapter;
@@ -15,9 +14,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 
@@ -25,24 +22,35 @@ import com.badlogic.gdx.utils.viewport.ExtendViewport;
 public class Main extends ApplicationAdapter {
 	private SpriteBatch batch;
 
+	//Input & Viewport
 	private ExtendViewport viewport = new ExtendViewport(1200.0f, 800.0f, 1200.0f, 800.0f);
 	private GameInput gameInput = new GameInput();
 
-	private Array<GameObject> gameObjects = new Array<>();
-
+	//Gamelogic
 	private final float updatesPerSecond = 60;
 	private final float logicFrameTime = 1 / updatesPerSecond;
 	private float deltaAccumulator = 0;
 	private BitmapFont font;
 
-	private PlayerFactory player;
-	private EnemyFactory enemy;
+	//Gameobjects
+	private Array<GameObject> gameObjects = new Array<>();
 
+	private GameObject player;
+	private GameObject zombie;
+	private GameObject fireball;
+
+	//Assetsrepo
 	private AssetRepository assetRepository;
 
-	PlayerObserver playerObserver;
+	//Observer
+	PositionObserver positionObserver;
 
+
+	//Statetime (delta)
 	float stateTime = 0f;
+
+	//Collision
+	Collision playerCollision;
 
 	@Override
 	public void create() {
@@ -53,11 +61,9 @@ public class Main extends ApplicationAdapter {
 		assetRepository = new AssetRepository();
 		assetRepository.preLoadAssets();
 
-		playerObserver = new PlayerObserver();
+		positionObserver = new PositionObserver();
 
-		///////////////////////////////////////////
-		//Create World and add worldObjects to gameObjects
-
+		//WORLD
 		World level = new World();
 		level.create();
 
@@ -66,12 +72,12 @@ public class Main extends ApplicationAdapter {
 		}
 
 
-		player = new PlayerFactory();
+		//FACTORIES
+		player = new PlayerFactory().create();
+		zombie = new EnemyFactory().create("zombie");
+		fireball = new EnemyFactory().create("fireball");
 
-		enemy = new EnemyFactory();
-
-
-		//////////////////////////////////////////////
+		playerCollision = new Collision();
 
 		font = new BitmapFont();
 		font.setColor(Color.WHITE);
@@ -92,22 +98,33 @@ public class Main extends ApplicationAdapter {
 			gameObject.draw(batch);
 		}
 
-
-		gameInput.input(player.create().getSprite(), 3);
-
-		player.create().draw(batch);
+		//PLAYER ENEMY COLLISION
+		playerCollision.getCollisionDetection(player.getSprite(), zombie.getSprite());
 
 
-		enemy.create("zombie", 34,23).draw(batch);
-		enemy.create("fireball", 100,23).draw(batch);
+		//INPUT
+		gameInput.input(player.getSprite(), 3);
 
 
+		//DRAW GAMEOBJECTS
+		player.draw(batch);
+		zombie.draw(batch);
+		fireball.draw(batch);
+
+		fireball.act(stateTime * 300);
+
+		//OBSERVER
+		//positionObserver.output(player.getX(), player.getY());
+		//positionObserver.output(player.getX(), player.getY());
+
+
+		//STATETIME
 		stateTime += Gdx.graphics.getDeltaTime();
 
-		playerObserver.outputPosition(player.create().getX(), player.create().getY());
-		playerObserver.outputRotation(player.create().getX(), player.create().getY());
-
+		//FONT DRAWS
 		font.draw(batch, "Tiles on screen: " + gameObjects.size, -viewport.getMaxWorldWidth()/3, -viewport.getMaxWorldHeight()/3);
+		font.draw(batch, "Player Collision: " + playerCollision.getCollisionDetection(player.getSprite(), zombie.getSprite()), -viewport.getMaxWorldWidth()/4, -viewport.getMaxWorldHeight()/5);
+
 
 		batch.end();
 	}

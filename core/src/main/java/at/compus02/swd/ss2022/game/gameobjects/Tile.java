@@ -72,4 +72,24 @@ public class Tile implements GameObject {
     public void draw(SpriteBatch batch) {
         this.sprite.draw(batch);
     }
+
+    @Override
+    public float getX() {
+        return this.sprite.getX();
+    }
+
+    @Override
+    public float getY() {
+        return this.sprite.getY();
+    }
+
+    @Override
+    public float getWidth() {
+        return sprite.getWidth();
+    }
+
+    @Override
+    public float getHeight() {
+        return sprite.getHeight();
+    }
 }

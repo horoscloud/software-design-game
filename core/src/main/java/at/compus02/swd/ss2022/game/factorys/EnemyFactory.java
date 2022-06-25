@@ -1,24 +1,21 @@
 package at.compus02.swd.ss2022.game.factorys;
 
-import at.compus02.swd.ss2022.game.gameobjects.Enemy;
+import at.compus02.swd.ss2022.game.enemies.Fireball;
+import at.compus02.swd.ss2022.game.enemies.Zombie;
+import at.compus02.swd.ss2022.game.interfaces.GameObject;
 
 public class EnemyFactory {
 
-    Enemy enemy;
 
     public EnemyFactory() {
     }
 
-    public Enemy create(String name, float posX, float posY){
-        switch (name){
+    public GameObject create(String name) {
+        switch (name) {
             case "zombie":
-                enemy = new Enemy("zombie");
-                enemy.setPosition(posX,posY);
-                return enemy;
+                return new Zombie();
             case "fireball":
-                enemy = new Enemy("fireball");
-                enemy.setPosition(posX,posY);
-                return enemy;
+                return new Fireball();
         }
         return null;
     }

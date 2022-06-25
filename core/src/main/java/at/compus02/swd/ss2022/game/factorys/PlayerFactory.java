@@ -14,7 +14,7 @@ public class PlayerFactory{
         player = new Player();
     }
 
-    public Player create(){
+    public GameObject create(){
         return player;
     }
 

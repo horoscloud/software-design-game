@@ -14,10 +14,10 @@ public class AnimationFactory {
 
     public com.badlogic.gdx.graphics.g2d.Animation create(String name){
         switch (name){
-            case "idle": return createAnimation("player/player_idle.png", 8,1,0.08f);
-            case "wake": return createAnimation("player/player_wake.png", 5,1,0.15f);
-            case "run": return createAnimation("player/player_move.png", 8,1,0.08f);
-            case "shoot": return createAnimation("player/player_shoot.png", 4,1,0.08f);
+            case "idle": return createAnimation("sp1/player_idle.png", 8,1,0.08f);
+            case "wake": return createAnimation("sp1/player_wake.png", 5,1,0.15f);
+            case "run": return createAnimation("sp1/player_move.png", 8,1,0.08f);
+            case "shoot": return createAnimation("sp1/player_shoot.png", 4,1,0.08f);
 
             default: return null;
         }

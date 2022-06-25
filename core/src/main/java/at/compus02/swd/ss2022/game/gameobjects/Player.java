@@ -11,12 +11,24 @@ public class Player implements GameObject{
     private Sprite sprite;
 
     public Player() {
-        texture = new Texture("player/player_idle.png");
+        texture = new Texture("sp1/player_idle.png");
         sprite = new Sprite(this.texture);
+
     }
 
     public float getX(){return sprite.getX();}
     public float getY(){return sprite.getY();}
+
+    @Override
+    public float getWidth() {
+        return sprite.getWidth();
+    }
+
+    @Override
+    public float getHeight() {
+        return sprite.getHeight();
+    }
+
     public Sprite getSprite(){return sprite;}
 
     @Override
