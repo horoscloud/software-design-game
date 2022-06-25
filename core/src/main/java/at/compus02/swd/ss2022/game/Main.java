@@ -104,8 +104,6 @@ public class Main extends ApplicationAdapter {
 
 		stateTime += Gdx.graphics.getDeltaTime();
 
-
-
 		playerObserver.outputPosition(player.create().getX(), player.create().getY());
 		playerObserver.outputRotation(player.create().getX(), player.create().getY());
 
