@@ -1,20 +1,26 @@
 package at.compus02.swd.ss2022.game.enemies;
 
 import at.compus02.swd.ss2022.game.interfaces.GameObject;
+import at.compus02.swd.ss2022.game.observer.PositionObserver;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Vector2;
 
 public class Zombie implements GameObject {
 
     private Texture texture;
     private Sprite sprite;
 
+
     public Zombie() {
         texture = new Texture("enemy/zombie.png");
         sprite = new Sprite(this.texture);
-        sprite.setSize(32,32);
+        sprite.setSize(20,32);
         sprite.setCenter(16,48);
+        sprite.setPosition(100, 100);
+
 
     }
 
@@ -40,7 +46,10 @@ public class Zombie implements GameObject {
     @Override
     public void act(float delta) {
 
+
+
     }
+
 
     @Override
     public GameObject setPosition(float x, float y) {

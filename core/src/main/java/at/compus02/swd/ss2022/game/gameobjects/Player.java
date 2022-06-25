@@ -32,7 +32,9 @@ public class Player implements GameObject{
     public Sprite getSprite(){return sprite;}
 
     @Override
-    public void act(float temp) {}
+    public void act(float delta) {}
+
+
 
     @Override
     public GameObject setPosition(float x, float y) {sprite.setPosition(x,y);

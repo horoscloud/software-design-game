@@ -56,6 +56,7 @@ public class Tile implements GameObject {
 
     }
 
+
     @Override
     public GameObject setPosition(float x, float y) {
         this.sprite.setPosition(x, y);

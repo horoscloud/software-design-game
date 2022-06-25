@@ -10,7 +10,6 @@ public class Fireball implements GameObject {
     private Texture texture;
     private Sprite sprite;
 
-  private int counter;
   private int direction;
 
     public Fireball() {
@@ -18,8 +17,7 @@ public class Fireball implements GameObject {
         sprite = new Sprite(this.texture);
         sprite.setSize(32,32);
         sprite.setCenter(16,48);
-        direction = 1;
-        counter = -600;
+        direction = -1;
     }
 
     public float getX(){return sprite.getX();}
@@ -44,71 +42,26 @@ public class Fireball implements GameObject {
     @Override
     public void act(float delta) {
 
-        /*
-        delta = (delta % 1200) - 600;
+        delta = (delta % 1200);
 
 
-        if(delta > 600) {
-            setPosition(delta, getY());
-        }
-        if(delta < 600) {
-            setPosition(-delta, getY());
-        }
 
-*/
+        if(direction == -1){
+            setPosition(600 - delta, getY());
 
-        System.out.println(delta);
+            if(delta > 1195 && direction == -1){
+                direction = 1;
+            }
+        }else if(direction == 1){
+            setPosition(delta - 600, getY());
 
-        delta = (delta % 2400) - 600;
-
-        if (delta>0&&delta<600)
-            direction=1;
-
-        if (delta>600&&delta<1200)
-            direction= -1;
-
-        if (direction ==1)
-            setPosition(delta,getY());
-
-        if (direction==-1)
-            setPosition(-delta,getY());
-
-        /*if(direction == 1) {
-            setPosition(delta, getY());
-            counter++;
-            if(counter == 599){
+            if(delta > 1195 && direction == 1){
                 direction = -1;
             }
         }
-
-        if(direction == -1) {
-            setPosition(-delta, getY());
-            counter--;
-            if(counter == -599){
-                direction = 1;
-            }
-        }
-
-*/
-
-        /*
-        delta = (delta % 1200) - 600;
-        if(direction == 1 || direction == 0){
-
-           if(delta > 500){
-               direction = -1;
-           }
-            setPosition(delta, getY());
-        }else if(direction == -1){
-
-            if(delta < -500){
-                direction = 1;
-            }
-            setPosition(delta, getY());
-        }
-*/
-
     }
+
+
 
     @Override
     public GameObject setPosition(float x, float y) {

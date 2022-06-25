@@ -99,7 +99,10 @@ public class Main extends ApplicationAdapter {
 		}
 
 		//PLAYER ENEMY COLLISION
-		playerCollision.getCollisionDetection(player.getSprite(), zombie.getSprite());
+		if(playerCollision.getCollisionDetection(player.getSprite(), fireball.getSprite())) {
+			player.getSprite().setColor(Color.RED);
+		}
+
 
 
 		//INPUT
@@ -112,6 +115,8 @@ public class Main extends ApplicationAdapter {
 		fireball.draw(batch);
 
 		fireball.act(stateTime * 300);
+		zombie.act(stateTime * 50);
+
 
 		//OBSERVER
 		//positionObserver.output(player.getX(), player.getY());
@@ -123,7 +128,7 @@ public class Main extends ApplicationAdapter {
 
 		//FONT DRAWS
 		font.draw(batch, "Tiles on screen: " + gameObjects.size, -viewport.getMaxWorldWidth()/3, -viewport.getMaxWorldHeight()/3);
-		font.draw(batch, "Player Collision: " + playerCollision.getCollisionDetection(player.getSprite(), zombie.getSprite()), -viewport.getMaxWorldWidth()/4, -viewport.getMaxWorldHeight()/5);
+		font.draw(batch, "Player - Zombie Collision: " + playerCollision.getCollisionDetection(player.getSprite(), zombie.getSprite()), -viewport.getMaxWorldWidth()/4, -viewport.getMaxWorldHeight()/5);
 
 
 		batch.end();
