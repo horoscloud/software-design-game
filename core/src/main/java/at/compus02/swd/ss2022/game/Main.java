@@ -48,6 +48,7 @@ public class Main extends ApplicationAdapter {
 
 	//Statetime (delta)
 	float stateTime = 0f;
+	float stateTime2 = 0f;
 
 	//Collision
 	Collision playerCollision;
@@ -114,8 +115,10 @@ public class Main extends ApplicationAdapter {
 		zombie.draw(batch);
 		fireball.draw(batch);
 
+
 		fireball.act(stateTime * 300);
-		zombie.act(stateTime * 50);
+		stateTime2 += Gdx.graphics.getDeltaTime();
+		zombie.act(stateTime2 , player.getX(), player.getY());
 
 
 		//OBSERVER
@@ -131,6 +134,7 @@ public class Main extends ApplicationAdapter {
 		font.draw(batch, "Player - Zombie Collision: " + playerCollision.getCollisionDetection(player.getSprite(), zombie.getSprite()), -viewport.getMaxWorldWidth()/4, -viewport.getMaxWorldHeight()/5);
 
 
+		stateTime2 = 0f;
 		batch.end();
 	}
 

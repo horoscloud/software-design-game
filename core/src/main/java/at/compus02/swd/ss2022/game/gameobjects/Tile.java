@@ -56,6 +56,11 @@ public class Tile implements GameObject {
 
     }
 
+    @Override
+    public void act(float delta, float x, float y) {
+
+    }
+
 
     @Override
     public GameObject setPosition(float x, float y) {

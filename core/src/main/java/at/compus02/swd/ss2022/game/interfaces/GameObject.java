@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public interface GameObject {
     void act(float delta);
+    void act(float delta, float x, float y);
     GameObject setPosition(float x, float y);
     GameObject setRotation(float deg);
     void draw(SpriteBatch batch);

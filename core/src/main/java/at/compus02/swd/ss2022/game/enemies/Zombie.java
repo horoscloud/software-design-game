@@ -13,6 +13,9 @@ public class Zombie implements GameObject {
     private Texture texture;
     private Sprite sprite;
 
+    Vector2 zPos;
+    Vector2 pPos;
+    Vector2 direction;
 
     public Zombie() {
         texture = new Texture("enemy/zombie.png");
@@ -21,6 +24,10 @@ public class Zombie implements GameObject {
         sprite.setCenter(16,48);
         sprite.setPosition(100, 100);
 
+        direction = new Vector2();
+
+        zPos = new Vector2();
+        pPos = new Vector2();
 
     }
 
@@ -47,7 +54,21 @@ public class Zombie implements GameObject {
     public void act(float delta) {
 
 
+    }
 
+    @Override
+    public void act(float delta, float x, float y) {
+
+        pPos.x = x;
+        pPos.y = y;
+
+        zPos.x = getX();
+        zPos.y = getY();
+
+        direction = pPos.sub(zPos).nor();
+
+        sprite.translateX(direction.x * delta * 50);
+        sprite.translateY(direction.y * delta * 50);
     }
 
 

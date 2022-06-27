@@ -34,6 +34,10 @@ public class Player implements GameObject{
     @Override
     public void act(float delta) {}
 
+    @Override
+    public void act(float delta, float x, float y) {
+
+    }
 
 
     @Override

@@ -61,6 +61,10 @@ public class Fireball implements GameObject {
         }
     }
 
+    @Override
+    public void act(float delta, float x, float y) {
+
+    }
 
 
     @Override
