@@ -18,6 +18,8 @@ public class Fireball implements GameObject {
         sprite.setSize(32,32);
         sprite.setCenter(16,48);
         direction = -1;
+
+        sprite.setPosition(10,-100);
     }
 
     public float getX(){return sprite.getX();}

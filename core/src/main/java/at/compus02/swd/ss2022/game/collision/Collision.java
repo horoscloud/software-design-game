@@ -10,10 +10,13 @@ public class Collision {
 
     public boolean getCollisionDetection(Sprite sp1, Sprite sp2){
 
-        if(sp1.getX() < sp2.getX() + sp2.getWidth()
+        if(
+                   sp1.getX() < sp2.getX() + sp2.getWidth()
                 && sp1.getX() + sp1.getWidth() > sp2.getX()
                 && sp1.getY() < sp2.getY() + sp2.getHeight()
-                && sp1.getY() + sp1.getHeight() > sp2.getHeight()) {
+                && sp1.getY() + sp1.getHeight() > sp2.getY()
+
+        ) {
 
             return true;
         }else
