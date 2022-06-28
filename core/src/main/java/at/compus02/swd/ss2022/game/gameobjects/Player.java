@@ -1,6 +1,7 @@
 package at.compus02.swd.ss2022.game.gameobjects;
 
 import at.compus02.swd.ss2022.game.interfaces.GameObject;
+import at.compus02.swd.ss2022.game.repositories.AssetRepository;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -10,10 +11,10 @@ public class Player implements GameObject{
     private Texture texture;
     private Sprite sprite;
 
-    public Player() {
-        texture = new Texture("sp1/player_idle.png");
-        sprite = new Sprite(this.texture);
 
+    public Player() {
+        texture = AssetRepository.getInstance().loadAsset("player");
+        sprite = new Sprite(this.texture);
     }
 
     public float getX(){return sprite.getX();}
@@ -53,4 +54,5 @@ public class Player implements GameObject{
 
     @Override
     public void draw(SpriteBatch batch) {sprite.draw(batch);}
+
 }

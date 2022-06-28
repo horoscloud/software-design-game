@@ -1,40 +1,53 @@
 package at.compus02.swd.ss2022.game.repositories;
 
+import com.badlogic.gdx.assets.AssetDescriptor;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.utils.Array;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 public class AssetRepository {
 
-    private AssetManager assetManager = new AssetManager();
 
-    private final List<String> paths = Arrays.asList(
-            "assets/bush.png",
-            "assets/log.png",
-            "assets/sign.png",
-            "assets/stone.png",
-            "assets/tile_gras.png",
-            "assets/tile_gras.png",
-            "assets/tile_gravel.png",
-            "assets/tile_wall.png",
-            "assets/tile_water.png"
-    );
+    private static AssetRepository instance;
+    private AssetRepository(){}
 
-    public AssetRepository() {
-
-    }
-
-    public void preLoadAssets(){
-        for (String s :paths) {
-            assetManager.load(s, Texture.class);
+    public static AssetRepository getInstance(){
+        if(instance == null){
+            instance = new AssetRepository();
         }
+        return instance;
     }
+    private static final Texture bush = new Texture("bush.png");
+    private static final Texture log = new Texture("log.png");
+    private static final Texture stone = new Texture("stone.png");
+    private static final Texture tile_gras = new Texture("tile_gras.png");
+    private static final Texture tile_gravel = new Texture("tile_gravel.png");
+    private static final Texture tile_wall = new Texture("tile_wall.png");
+    private static final Texture tile_water = new Texture("tile_water.png");
 
-    public void dispose(){
-        assetManager.dispose();
+    private static final Texture player = new Texture("sp1/player_idle.png");
+    private static final Texture zombie = new Texture("enemy/zombie.png");
+    private static final Texture fireball = new Texture("enemy/fireball.png");
+
+    private HashMap<String, Texture> textureHashMap = new HashMap<String, Texture>(){{
+
+        put("bush", bush);
+        put("log", log);
+        put("stone", stone);
+        put("gras", tile_gras);
+        put("gravel", tile_gravel);
+        put("water", tile_water);
+        put("wall", tile_wall);
+
+        put("player", player);
+        put("fireball", fireball);
+        put("zombie", zombie);
+
+    }};
+
+    public Texture loadAsset(String key) {
+        return textureHashMap.get(key);
     }
 }

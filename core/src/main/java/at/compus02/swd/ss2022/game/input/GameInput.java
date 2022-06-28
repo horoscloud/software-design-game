@@ -8,11 +8,17 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 
 public class GameInput extends InputAdapter {
 
-    public GameInput() {
+    public boolean hit;
 
+    public GameInput() {
+        hit = false;
     }
 
     public void input(Sprite sprite, float playerSpeed) {
+
+        if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
+            hit = true;
+        }
 
         if (Gdx.input.isKeyPressed(Input.Keys.LEFT) || Gdx.input.isKeyPressed(Input.Keys.A)) {
             sprite.translateX(-1f * playerSpeed);
@@ -34,4 +40,8 @@ public class GameInput extends InputAdapter {
         }
     }
 
+
+    public boolean isHit() {
+        return hit;
+    }
 }

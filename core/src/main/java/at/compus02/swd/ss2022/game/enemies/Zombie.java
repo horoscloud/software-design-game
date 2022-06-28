@@ -1,8 +1,7 @@
 package at.compus02.swd.ss2022.game.enemies;
 
 import at.compus02.swd.ss2022.game.interfaces.GameObject;
-import at.compus02.swd.ss2022.game.observer.PositionObserver;
-import com.badlogic.gdx.Gdx;
+import at.compus02.swd.ss2022.game.repositories.AssetRepository;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -13,12 +12,14 @@ public class Zombie implements GameObject {
     private Texture texture;
     private Sprite sprite;
 
+
     Vector2 zPos;
     Vector2 pPos;
     Vector2 direction;
 
+
     public Zombie() {
-        texture = new Texture("enemy/zombie.png");
+        texture = AssetRepository.getInstance().loadAsset("zombie");
         sprite = new Sprite(this.texture);
         sprite.setSize(20,32);
         sprite.setCenter(16,48);

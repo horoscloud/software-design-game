@@ -1,6 +1,7 @@
 package at.compus02.swd.ss2022.game.enemies;
 
 import at.compus02.swd.ss2022.game.interfaces.GameObject;
+import at.compus02.swd.ss2022.game.repositories.AssetRepository;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -13,7 +14,7 @@ public class Fireball implements GameObject {
   private int direction;
 
     public Fireball() {
-        texture = new Texture("enemy/fireball.png");
+        texture = AssetRepository.getInstance().loadAsset("fireball");
         sprite = new Sprite(this.texture);
         sprite.setSize(32,32);
         sprite.setCenter(16,48);

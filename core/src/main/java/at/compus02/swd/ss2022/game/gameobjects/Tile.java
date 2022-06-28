@@ -1,6 +1,7 @@
 package at.compus02.swd.ss2022.game.gameobjects;
 
 import at.compus02.swd.ss2022.game.interfaces.GameObject;
+import at.compus02.swd.ss2022.game.repositories.AssetRepository;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -13,35 +14,35 @@ public class Tile implements GameObject {
     public Tile(String tileName) {
         switch (tileName){
             case "gras":
-                texture = new Texture("tile_gras.png");
+                texture = AssetRepository.getInstance().loadAsset("gras");
                 sprite = new Sprite(this.texture);
                 break;
             case "gravel":
-                texture = new Texture("tile_gravel.png");
+                texture = AssetRepository.getInstance().loadAsset("gravel");
                 sprite = new Sprite(this.texture);
                 break;
             case "wall":
-                texture = new Texture("tile_wall.png");
+                texture = AssetRepository.getInstance().loadAsset("wall");
                 sprite = new Sprite(this.texture);
                 break;
             case "water":
-                texture = new Texture("tile_water.png");
+                texture = AssetRepository.getInstance().loadAsset("water");
                 sprite = new Sprite(this.texture);
                 break;
             case "bush":
-                texture = new Texture("bush.png");
+                texture = AssetRepository.getInstance().loadAsset("bush");
                 sprite = new Sprite(this.texture);
                 break;
             case "sign":
-                texture = new Texture("sign.png");
+                texture = AssetRepository.getInstance().loadAsset("sign");
                 sprite = new Sprite(this.texture);
                 break;
             case "log":
-                texture = new Texture("log.png");
+                texture = AssetRepository.getInstance().loadAsset("log");
                 sprite = new Sprite(this.texture);
                 break;
             case "stone":
-                texture = new Texture("stone.png");
+                texture = AssetRepository.getInstance().loadAsset("stone");
                 sprite = new Sprite(this.texture);
                 break;
         }

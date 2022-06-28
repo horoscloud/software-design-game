@@ -1,15 +1,16 @@
 package at.compus02.swd.ss2022.game;
 
 import at.compus02.swd.ss2022.game.collision.Collision;
-import at.compus02.swd.ss2022.game.enemies.Zombie;
 import at.compus02.swd.ss2022.game.factorys.EnemyFactory;
 import at.compus02.swd.ss2022.game.factorys.PlayerFactory;
 import at.compus02.swd.ss2022.game.interfaces.GameObject;
 import at.compus02.swd.ss2022.game.input.GameInput;
-import at.compus02.swd.ss2022.game.observer.PositionObserver;
+import at.compus02.swd.ss2022.game.observer.EnemyPositionObserver;
+import at.compus02.swd.ss2022.game.observer.Observer;
+import at.compus02.swd.ss2022.game.observer.PlayerPositionObserver;
 import at.compus02.swd.ss2022.game.repositories.AssetRepository;
 import at.compus02.swd.ss2022.game.world.World;
-import com.badlogic.gdx.ApplicationAdapter;
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
@@ -19,8 +20,8 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 
 /** {@link com.badlogic.gdx.ApplicationListener} implementation shared by all platforms. */
-public class Main extends ApplicationAdapter {
-	private SpriteBatch batch;
+public class Main extends Game {
+	public SpriteBatch batch;
 
 	//Input & Viewport
 	private ExtendViewport viewport = new ExtendViewport(1200.0f, 800.0f, 1200.0f, 800.0f);
@@ -30,7 +31,7 @@ public class Main extends ApplicationAdapter {
 	private final float updatesPerSecond = 60;
 	private final float logicFrameTime = 1 / updatesPerSecond;
 	private float deltaAccumulator = 0;
-	private BitmapFont font;
+	public BitmapFont font;
 
 	//Gameobjects
 	private Array<GameObject> gameObjects = new Array<>();
@@ -39,12 +40,11 @@ public class Main extends ApplicationAdapter {
 	private GameObject zombie;
 	private GameObject fireball;
 
-	//Assetsrepo
-	private AssetRepository assetRepository;
 
 	//Observer
-	PositionObserver positionObserver;
-
+	Observer observer;
+	PlayerPositionObserver playerPositionObserver;
+	EnemyPositionObserver enemyPositionObserver;
 
 	//Statetime (delta)
 	float stateTime = 0f;
@@ -59,10 +59,11 @@ public class Main extends ApplicationAdapter {
 		batch = new SpriteBatch();
 
 
-		assetRepository = new AssetRepository();
-		assetRepository.preLoadAssets();
-
-		positionObserver = new PositionObserver();
+		observer = new Observer();
+		playerPositionObserver = new PlayerPositionObserver();
+		enemyPositionObserver = new EnemyPositionObserver();
+		observer.addObserver(playerPositionObserver);
+		observer.addObserver(enemyPositionObserver);
 
 		//WORLD
 		World level = new World();
@@ -104,7 +105,13 @@ public class Main extends ApplicationAdapter {
 			player.getSprite().setColor(Color.RED);
 		}
 
+		if(playerCollision.getCollisionDetection(player.getSprite(), zombie.getSprite())) {
+			player.getSprite().setColor(Color.RED);
+		}
 
+		if(playerCollision.getHitCollisionDetection(player.getSprite(), zombie.getSprite()) && gameInput.isHit()) {
+			zombie.getSprite().setColor(Color.RED);
+		}
 
 		//INPUT
 		gameInput.input(player.getSprite(), 3);
@@ -120,6 +127,10 @@ public class Main extends ApplicationAdapter {
 		stateTime2 += Gdx.graphics.getDeltaTime();
 		zombie.act(stateTime2 , player.getX(), player.getY());
 
+
+
+		playerPositionObserver.update(player.getX(), player.getY());
+		enemyPositionObserver.update(zombie.getX(), zombie.getY());
 
 		//OBSERVER
 		//positionObserver.output(player.getX(), player.getY());
