@@ -27,9 +27,11 @@ public class AssetRepository {
     private static final Texture tile_wall = new Texture("tile_wall.png");
     private static final Texture tile_water = new Texture("tile_water.png");
 
-    private static final Texture player = new Texture("sp1/player_idle.png");
+    private static final Texture player = new Texture("animation/player/player_idle.png");
     private static final Texture zombie = new Texture("enemy/zombie.png");
     private static final Texture fireball = new Texture("enemy/fireball.png");
+
+    private static final Texture pixel_heart = new Texture("hud/pixel_heart.png");
 
     private HashMap<String, Texture> textureHashMap = new HashMap<String, Texture>(){{
 
@@ -44,6 +46,8 @@ public class AssetRepository {
         put("player", player);
         put("fireball", fireball);
         put("zombie", zombie);
+
+        put("pixel_heart", pixel_heart);
 
     }};
 

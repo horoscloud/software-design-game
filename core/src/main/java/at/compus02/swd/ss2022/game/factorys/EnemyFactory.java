@@ -1,7 +1,7 @@
 package at.compus02.swd.ss2022.game.factorys;
 
-import at.compus02.swd.ss2022.game.enemies.Fireball;
-import at.compus02.swd.ss2022.game.enemies.Zombie;
+import at.compus02.swd.ss2022.game.objects.enemies.Fireball;
+import at.compus02.swd.ss2022.game.objects.enemies.Zombie;
 import at.compus02.swd.ss2022.game.interfaces.GameObject;
 
 public class EnemyFactory {

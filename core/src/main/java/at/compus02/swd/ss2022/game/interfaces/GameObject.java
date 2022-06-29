@@ -14,4 +14,6 @@ public interface GameObject {
     float getWidth();
     float getHeight();
     Sprite getSprite();
+    int getHealth();
+    void setHealth(int health);
 }

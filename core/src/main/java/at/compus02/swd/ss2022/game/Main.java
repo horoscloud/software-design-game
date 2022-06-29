@@ -1,30 +1,38 @@
 package at.compus02.swd.ss2022.game;
 
-import at.compus02.swd.ss2022.game.collision.Collision;
+import at.compus02.swd.ss2022.game.collision.ObjectCollision;
+import at.compus02.swd.ss2022.game.factorys.AnimationFactory;
 import at.compus02.swd.ss2022.game.factorys.EnemyFactory;
+import at.compus02.swd.ss2022.game.factorys.HeartFactory;
 import at.compus02.swd.ss2022.game.factorys.PlayerFactory;
+import at.compus02.swd.ss2022.game.objects.hud.PixelHeart;
 import at.compus02.swd.ss2022.game.interfaces.GameObject;
 import at.compus02.swd.ss2022.game.input.GameInput;
 import at.compus02.swd.ss2022.game.observer.EnemyPositionObserver;
 import at.compus02.swd.ss2022.game.observer.Observer;
 import at.compus02.swd.ss2022.game.observer.PlayerPositionObserver;
-import at.compus02.swd.ss2022.game.repositories.AssetRepository;
-import at.compus02.swd.ss2022.game.world.World;
+import at.compus02.swd.ss2022.game.world.TiledMapWorld;
+import at.compus02.swd.ss2022.game.world.oldworldgeneration.World;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
+import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
+
+import java.util.ArrayList;
 
 /** {@link com.badlogic.gdx.ApplicationListener} implementation shared by all platforms. */
 public class Main extends Game {
 	public SpriteBatch batch;
 
 	//Input & Viewport
-	private ExtendViewport viewport = new ExtendViewport(1200.0f, 800.0f, 1200.0f, 800.0f);
+	private ExtendViewport viewport = new ExtendViewport(1216.0f, 832.0f, 1216.0f, 832.0f);
 	private GameInput gameInput = new GameInput();
 
 	//Gamelogic
@@ -33,6 +41,10 @@ public class Main extends Game {
 	private float deltaAccumulator = 0;
 	public BitmapFont font;
 
+	//VARIABLES
+	int collisionCounter = 0;
+	int gameState = 0;
+
 	//Gameobjects
 	private Array<GameObject> gameObjects = new Array<>();
 
@@ -40,6 +52,8 @@ public class Main extends Game {
 	private GameObject zombie;
 	private GameObject fireball;
 
+	//HUD
+	private HeartFactory heart;
 
 	//Observer
 	Observer observer;
@@ -50,36 +64,42 @@ public class Main extends Game {
 	float stateTime = 0f;
 	float stateTime2 = 0f;
 
-	//Collision
-	Collision playerCollision;
+	//ObjectCollision
+	ObjectCollision playerObjectCollision;
+
 
 	@Override
 	public void create() {
 
 		batch = new SpriteBatch();
 
+		World world = new World();
+		world.create();
 
+		for (GameObject go: world.getWorldObjects()) {
+			gameObjects.add(go);
+		}
+
+
+		//CREATE OBSERVER
 		observer = new Observer();
 		playerPositionObserver = new PlayerPositionObserver();
 		enemyPositionObserver = new EnemyPositionObserver();
 		observer.addObserver(playerPositionObserver);
 		observer.addObserver(enemyPositionObserver);
 
-		//WORLD
-		World level = new World();
-		level.create();
-
-		for (GameObject gm:level.getWorldObjects()) {
-			gameObjects.add(gm);
-		}
-
 
 		//FACTORIES
 		player = new PlayerFactory().create();
-		zombie = new EnemyFactory().create("zombie");
-		fireball = new EnemyFactory().create("fireball");
 
-		playerCollision = new Collision();
+		zombie = new EnemyFactory().create("zombie");
+		gameObjects.add(zombie);
+
+		fireball = new EnemyFactory().create("fireball");
+		heart = new HeartFactory();
+		heart.create(viewport);
+
+		playerObjectCollision = new ObjectCollision();
 
 		font = new BitmapFont();
 		font.setColor(Color.WHITE);
@@ -96,56 +116,39 @@ public class Main extends Game {
 		batch.setProjectionMatrix(viewport.getCamera().combined);
 
 		batch.begin();
-		for(GameObject gameObject : gameObjects) {
-			gameObject.draw(batch);
+
+
+		if(gameState == 0){
+
+			//DRAW GAMEOBJECTS
+			drawGameobjects();
+
+			//COLLISION
+			setCollisionDetection();
+
+			//INPUT
+			setGameInput(3);
+
+
+			//LOGIC (Act)
+			setObjectLogic();
+
+			//FONT DRAWS
+			setFonts();
+
+			//OBSERVER
+			//playerPositionObserver.update(player.getX(), player.getY());
+			//enemyPositionObserver.update(zombie.getX(), zombie.getY());
+
+
+			//STATETIME
+			setStateTime();
+
+		}else if(gameState==1){
+			setGameOver();
 		}
 
-		//PLAYER ENEMY COLLISION
-		if(playerCollision.getCollisionDetection(player.getSprite(), fireball.getSprite())) {
-			player.getSprite().setColor(Color.RED);
-		}
 
-		if(playerCollision.getCollisionDetection(player.getSprite(), zombie.getSprite())) {
-			player.getSprite().setColor(Color.RED);
-		}
-
-		if(playerCollision.getHitCollisionDetection(player.getSprite(), zombie.getSprite()) && gameInput.isHit()) {
-			zombie.getSprite().setColor(Color.RED);
-		}
-
-		//INPUT
-		gameInput.input(player.getSprite(), 3);
-
-
-		//DRAW GAMEOBJECTS
-		player.draw(batch);
-		zombie.draw(batch);
-		fireball.draw(batch);
-
-
-		fireball.act(stateTime * 300);
-		stateTime2 += Gdx.graphics.getDeltaTime();
-		zombie.act(stateTime2 , player.getX(), player.getY());
-
-
-
-		playerPositionObserver.update(player.getX(), player.getY());
-		enemyPositionObserver.update(zombie.getX(), zombie.getY());
-
-		//OBSERVER
-		//positionObserver.output(player.getX(), player.getY());
-		//positionObserver.output(player.getX(), player.getY());
-
-
-		//STATETIME
-		stateTime += Gdx.graphics.getDeltaTime();
-
-		//FONT DRAWS
-		font.draw(batch, "Tiles on screen: " + gameObjects.size, -viewport.getMaxWorldWidth()/3, -viewport.getMaxWorldHeight()/3);
-		font.draw(batch, "Player - Zombie Collision: " + playerCollision.getCollisionDetection(player.getSprite(), zombie.getSprite()), -viewport.getMaxWorldWidth()/4, -viewport.getMaxWorldHeight()/5);
-
-
-		stateTime2 = 0f;
 		batch.end();
 	}
 
@@ -153,6 +156,8 @@ public class Main extends Game {
 	public void render() {
 		Gdx.gl.glClearColor(0, 0, 0, 1f);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+
+
 
 		float delta = Gdx.graphics.getDeltaTime();
 		deltaAccumulator += delta;
@@ -171,5 +176,116 @@ public class Main extends Game {
 	@Override
 	public void resize(int width, int height){
 		viewport.update(width,height);
+	}
+
+
+	private void checkGameOverCondition(){
+
+		if(heart.getHealth().size()>0 && collisionCounter > 6){
+
+			heart.getHealth().remove(0);
+			collisionCounter = 0;
+		}else if(heart.getHealth().size()==0){
+			gameState=1;
+			System.out.println("Game Over");
+		}
+		collisionCounter++;
+	}
+
+	private void setCollisionDetection(){
+		//PLAYER ENEMY COLLISION
+
+		if(playerObjectCollision.getCollisionDetection(player.getSprite(), fireball.getSprite())) {
+			checkGameOverCondition();
+		}
+
+		if(playerObjectCollision.getCollisionDetection(player.getSprite(), zombie.getSprite())) {
+			checkGameOverCondition();
+		}
+
+		if(playerObjectCollision.getHitCollisionDetection(player.getSprite(), zombie.getSprite())) {
+
+			if(gameInput.isHit()){
+
+
+				int zombieHealth = zombie.getHealth();
+
+				if(zombieHealth > 0){
+					zombieHealth-=1;
+					zombie.setHealth(zombieHealth);
+
+				}else{
+					for (int i = 0; i < gameObjects.size; i++) {
+						if(gameObjects.get(i).equals(zombie)){
+							gameObjects.get(i).setPosition((int)(Math.random() * viewport.getMaxWorldWidth() + -viewport.getMinWorldWidth()),(int)(Math.random() * viewport.getMaxWorldHeight() + -viewport.getMinWorldHeight()));
+							gameObjects.get(i).setHealth((int)(Math.random() * (20-1)+1) + 1);
+						}
+					}
+				}
+
+
+			}
+
+		}
+	}
+
+	private void setGameInput(int speed){
+		gameInput.input(player.getSprite(), speed);
+	}
+
+	private void setObjectLogic(){
+
+		fireball.act(stateTime * 300);
+		stateTime2 += Gdx.graphics.getDeltaTime();
+		zombie.act(stateTime2 , player.getX(), player.getY());
+
+	}
+
+	private void setFonts(){
+
+		font.draw(batch, ""+zombie.getHealth(), zombie.getX()+10, zombie.getY()+50);
+
+		font.draw(batch, "Game Data: ", -585,-330);
+		font.draw(batch, "Tiles on screen: " + gameObjects.size, -585,-345);
+		font.draw(batch, "Player-Zombie-Col: " + playerObjectCollision.getCollisionDetection(player.getSprite(), zombie.getSprite()), -585,-360);
+		font.draw(batch, "PlayerHealth: " + heart.getHealth().size(), -585,-375);
+	}
+
+	private void drawGameobjects(){
+		for(GameObject gameObject : gameObjects) {
+			gameObject.draw(batch);
+		}
+
+		player.draw(batch);
+
+		fireball.draw(batch);
+
+		for (PixelHeart px: heart.getHealth()) {
+			px.draw(batch);
+		}
+	}
+
+	private void setStateTime(){
+		stateTime += Gdx.graphics.getDeltaTime();
+		stateTime2 = 0f;
+	}
+
+	private void setGameOver(){
+		if(gameState==1){
+			font.getData().setScale(2);
+			font.draw(batch, "GAME OVER!", -100, +100);
+			font.draw(batch, "EXIT: 'ESCAPE'", -100, 0);
+			font.draw(batch, "REPLAY: 'ENTER'", -100, -100);
+			if(Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)){
+				Gdx.app.exit();
+			}else if(Gdx.input.isKeyJustPressed(Input.Keys.ENTER)){
+				gameState=0;
+				heart.setHealthCount(3);
+				heart.create(viewport);
+				player.setPosition(0,0);
+				zombie.setPosition(-300,300);
+				font.getData().setScale(1);
+			}
+		}
 	}
 }

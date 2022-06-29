@@ -1,14 +1,15 @@
 package at.compus02.swd.ss2022.game.collision;
 
+import at.compus02.swd.ss2022.game.interfaces.Collision;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 
-public class Collision {
+public class ObjectCollision implements Collision<Sprite> {
 
     private static int hitOffset = 20;
     private static int detectionOffset = 15;
 
 
-    public Collision() {
+    public ObjectCollision() {
     }
 
     public boolean getCollisionDetection(Sprite sp1, Sprite sp2){
@@ -20,7 +21,6 @@ public class Collision {
                 && sp1.getY() + sp1.getHeight() - detectionOffset > sp2.getY()
 
         ) {
-
             return true;
         }else
             return false;
@@ -36,7 +36,6 @@ public class Collision {
                         && sp1.getY() + sp1.getHeight() + hitOffset > sp2.getY()
 
         ) {
-
             return true;
         }else
             return false;

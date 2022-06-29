@@ -12,18 +12,19 @@ public class AnimationFactory {
     Texture sheet;
 
 
-    public com.badlogic.gdx.graphics.g2d.Animation create(String name){
+    public com.badlogic.gdx.graphics.g2d.Animation<TextureRegion> create(String name){
         switch (name){
-            case "idle": return createAnimation("sp1/player_idle.png", 8,1,0.08f);
-            case "wake": return createAnimation("sp1/player_wake.png", 5,1,0.15f);
-            case "run": return createAnimation("sp1/player_move.png", 8,1,0.08f);
-            case "shoot": return createAnimation("sp1/player_shoot.png", 4,1,0.08f);
+            case "idle": return createAnimation("animation/player/player_idle.png", 6,1,0.1f);
+            case "wake": return createAnimation("animation/player/player_run.png", 6,1,0.08f);
+            case "run": return createAnimation("animation/player/player_slash.png", 4,1,0.05f);
+            case "shoot": return createAnimation("animation/player/player_shoot.png", 4,1,0.08f);
+
 
             default: return null;
         }
     }
 
-    public com.badlogic.gdx.graphics.g2d.Animation createAnimation(String filepath, int frame_rows, int frame_cols, float frameDuration){
+    public com.badlogic.gdx.graphics.g2d.Animation<TextureRegion> createAnimation(String filepath, int frame_rows, int frame_cols, float frameDuration){
 
         try {
             sheet = new Texture(Gdx.files.internal(filepath));

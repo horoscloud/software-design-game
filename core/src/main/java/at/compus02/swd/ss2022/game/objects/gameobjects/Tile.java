@@ -1,4 +1,4 @@
-package at.compus02.swd.ss2022.game.gameobjects;
+package at.compus02.swd.ss2022.game.objects.gameobjects;
 
 import at.compus02.swd.ss2022.game.interfaces.GameObject;
 import at.compus02.swd.ss2022.game.repositories.AssetRepository;
@@ -50,6 +50,16 @@ public class Tile implements GameObject {
 
     public Sprite getSprite() {
         return sprite;
+    }
+
+    @Override
+    public int getHealth() {
+        return 0;
+    }
+
+    @Override
+    public void setHealth(int health) {
+
     }
 
     @Override

@@ -1,6 +1,5 @@
 package at.compus02.swd.ss2022.game.input;
 
-import at.compus02.swd.ss2022.game.gameobjects.Player;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputAdapter;
@@ -16,9 +15,11 @@ public class GameInput extends InputAdapter {
 
     public void input(Sprite sprite, float playerSpeed) {
 
-        if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
+
+        if (Gdx.input.isKeyPressed(Input.Keys.SPACE)) {
             hit = true;
-        }
+        }else
+            hit = false;
 
         if (Gdx.input.isKeyPressed(Input.Keys.LEFT) || Gdx.input.isKeyPressed(Input.Keys.A)) {
             sprite.translateX(-1f * playerSpeed);
@@ -39,6 +40,8 @@ public class GameInput extends InputAdapter {
 
         }
     }
+
+
 
 
     public boolean isHit() {

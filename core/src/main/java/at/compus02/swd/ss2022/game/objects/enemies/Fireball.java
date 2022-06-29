@@ -1,4 +1,4 @@
-package at.compus02.swd.ss2022.game.enemies;
+package at.compus02.swd.ss2022.game.objects.enemies;
 
 import at.compus02.swd.ss2022.game.interfaces.GameObject;
 import at.compus02.swd.ss2022.game.repositories.AssetRepository;
@@ -39,6 +39,16 @@ public class Fireball implements GameObject {
     @Override
     public Sprite getSprite() {
         return this.sprite;
+    }
+
+    @Override
+    public int getHealth() {
+        return 0;
+    }
+
+    @Override
+    public void setHealth(int health) {
+
     }
 
 
